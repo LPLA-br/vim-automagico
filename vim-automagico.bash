@@ -10,6 +10,13 @@ echo "NODE instalado $( if [[ -f /bin/node ]]; then echo '...[ OK ]'; else echo 
 
 mv ./vimrc /home/$USER/.vimrc;
 
+if [[ $? == 0 ]]; then
+	echo .vimrc ...[ OK ];
+elif [[ $? != 0 ]]; then
+	echo .vimrc ...[ FALHOU ];
+	exit;
+fi
+
 curl -fLo /home/$USER/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim;
 
 if [[ $? == 0 ]]; then
@@ -19,7 +26,7 @@ elif [[ $? != 0 ]]; then
 	exit;
 fi
 
-echo ':plugInstall' > $VIMSCRIPTDIR;
+echo -e ":plugInstall\n:CocInstall coc-html\n:CocInstall coc-tsserver\n:CocInstall coc-css" > $VIMSCRIPTDIR;
 vim -s $VIMSCRIPTDIR;
 
 if [[ $? == 0 ]]; then
